@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/launchpad/static/css/main.aba6fb74.css",
+    "main.js": "/launchpad/static/js/main.ab2e7679.js",
+    "static/js/208.253fb789.chunk.js": "/launchpad/static/js/208.253fb789.chunk.js",
+    "static/js/293.33fefeb3.chunk.js": "/launchpad/static/js/293.33fefeb3.chunk.js",
+    "static/js/917.fec39127.chunk.js": "/launchpad/static/js/917.fec39127.chunk.js",
+    "static/js/516.390aeda2.chunk.js": "/launchpad/static/js/516.390aeda2.chunk.js",
+    "static/js/519.54f097b2.chunk.js": "/launchpad/static/js/519.54f097b2.chunk.js",
+    "static/js/946.2892be86.chunk.js": "/launchpad/static/js/946.2892be86.chunk.js",
+    "static/js/160.446879d0.chunk.js": "/launchpad/static/js/160.446879d0.chunk.js",
+    "static/js/23.a4d62310.chunk.js": "/launchpad/static/js/23.a4d62310.chunk.js",
+    "static/js/453.8ab44547.chunk.js": "/launchpad/static/js/453.8ab44547.chunk.js",
+    "static/media/launchpad-logo.svg": "/launchpad/static/media/launchpad-logo.3fe85707ef8279ed68fbbe9dd10ec413.svg",
+    "index.html": "/launchpad/index.html",
+    "static/media/eth-icon.svg": "/launchpad/static/media/eth-icon.6b2d39e6e2b2f0e64a027f8a98257dc4.svg",
+    "static/media/stars-bg.svg": "/launchpad/static/media/stars-bg.aaa070230e7981d61ca5.svg",
+    "main.aba6fb74.css.map": "/launchpad/static/css/main.aba6fb74.css.map",
+    "main.ab2e7679.js.map": "/launchpad/static/js/main.ab2e7679.js.map",
+    "208.253fb789.chunk.js.map": "/launchpad/static/js/208.253fb789.chunk.js.map",
+    "293.33fefeb3.chunk.js.map": "/launchpad/static/js/293.33fefeb3.chunk.js.map",
+    "917.fec39127.chunk.js.map": "/launchpad/static/js/917.fec39127.chunk.js.map",
+    "516.390aeda2.chunk.js.map": "/launchpad/static/js/516.390aeda2.chunk.js.map",
+    "519.54f097b2.chunk.js.map": "/launchpad/static/js/519.54f097b2.chunk.js.map",
+    "946.2892be86.chunk.js.map": "/launchpad/static/js/946.2892be86.chunk.js.map",
+    "160.446879d0.chunk.js.map": "/launchpad/static/js/160.446879d0.chunk.js.map",
+    "23.a4d62310.chunk.js.map": "/launchpad/static/js/23.a4d62310.chunk.js.map",
+    "453.8ab44547.chunk.js.map": "/launchpad/static/js/453.8ab44547.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.aba6fb74.css",
+    "static/js/main.ab2e7679.js"
+  ]
+}
