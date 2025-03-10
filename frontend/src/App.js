@@ -620,15 +620,7 @@ function App() {
                             }}
                             aria-label="Close modal"
                         />
-                        <button
-                            className="modal-back"
-                            onClick={() => {
-                                setShowCreateModal(false);
-                                setTokenURI("");
-                            }}
-                        >
-                            <i className="fas fa-arrow-left"></i>
-                        </button>
+
                         <h2>Create New NFT</h2>
                         <div className="modal-form">
                             <div className="form-group">
@@ -679,7 +671,7 @@ function App() {
 
             {/* Fetch NFT Modal */}
             {showFetchModal && (
-                <div className="modal-overlay">
+                <div className="modal-overlay fetch-nft-modal">
                     <div className="modal-content">
                         <button
                             className="modal-close"
@@ -693,93 +685,95 @@ function App() {
 
                         <h2>Fetch NFT</h2>
 
-                        <div className="search-group">
-                            <input
-                                type="number"
-                                min="0"
-                                placeholder="Enter NFT index"
-                                value={fetchIndex}
-                                onChange={(e) => setFetchIndex(e.target.value)}
-                            />
-                            <button
-                                className="search-btn primary-btn"
-                                onClick={async () => {
-                                    try {
-                                        setIsLoading(true);
-                                        const metadata = await getNFTMetadata(fetchIndex);
-
-                                        if (!metadata) {
-                                            throw new Error("Failed to fetch NFT metadata");
-                                        }
-
-                                        const contract = await getEthereumContract();
-                                        const owner = await contract.ownerOf(fetchIndex);
-
-                                        setFetchedNFT({
-                                            tokenId: fetchIndex,
-                                            name: metadata.name,
-                                            description: metadata.description,
-                                            image: metadata.image, // Processed image URL
-                                            owner
-                                        });
-                                    } catch (error) {
-                                        console.error("Error fetching NFT:", error);
-                                        alert("Failed to fetch NFT: " + error.message);
-                                    } finally {
-                                        setIsLoading(false);
-                                    }
-                                }}
-                                disabled={isLoading || !fetchIndex}
-                            >
-                                {isLoading ? "Fetching..." : "Search"}
-                            </button>
-                        </div>
-
                         {fetchedNFT && (
-                            <>
-                                <button
-                                    className="modal-back"
-                                    onClick={() => {
-                                        setShowFetchModal(false);
-                                        setFetchIndex('');
-                                        setFetchedNFT(null);
-                                    }}
-                                >
-                                    <i className="fas fa-arrow-left"></i>
-                                </button>
+                            <button
+                                className="modal-back"
+                                onClick={() => {
+                                    setShowFetchModal(false);
+                                    setFetchedNFT(null);
+                                    setFetchIndex('');
+                                }}
+                            >
+                                <i className="fas fa-arrow-left"></i>
+                            </button>
+                        )}
 
-                                <div className="marketplace-card">
-                                    {fetchedNFT.owner.toLowerCase() === account.toLowerCase() && (
-                                        <div className="ownership-badge">
-                                            <i className="fas fa-user"></i>
-                                            You Own This
-                                        </div>
-                                    )}
-                                    <div className="card-image">
-                                        <img
-                                            src={fetchedNFT.image || '/assets/space-placeholder.svg'}
-                                            alt={fetchedNFT.name || `LaunchPad NFT #${fetchedNFT.tokenId}`}
-                                        />
+                        {!fetchedNFT ? (
+                            <div className="search-group">
+                                <input
+                                    type="number"
+                                    min="0"
+                                    placeholder="Enter NFT index"
+                                    value={fetchIndex}
+                                    onChange={(e) => setFetchIndex(e.target.value)}
+                                />
+                                <button
+                                    className="search-btn primary-btn"
+                                    onClick={async () => {
+                                        try {
+                                            setIsLoading(true);
+                                            const metadata = await getNFTMetadata(fetchIndex);
+
+                                            if (!metadata) {
+                                                throw new Error("Failed to fetch NFT metadata");
+                                            }
+
+                                            const contract = await getEthereumContract();
+                                            const owner = await contract.ownerOf(fetchIndex);
+
+                                            setFetchedNFT({
+                                                tokenId: fetchIndex,
+                                                name: metadata.name,
+                                                description: metadata.description,
+                                                image: metadata.image, // Processed image URL
+                                                owner
+                                            });
+                                        } catch (error) {
+                                            console.error("Error fetching NFT:", error);
+                                            alert("Failed to fetch NFT: " + error.message);
+                                        } finally {
+                                            setIsLoading(false);
+                                        }
+                                    }}
+                                    disabled={isLoading || !fetchIndex}
+                                >
+                                    {isLoading ? "Fetching..." : "Search"}
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="marketplace-card">
+                                {fetchedNFT.owner.toLowerCase() === account.toLowerCase() && (
+                                    <div className="ownership-badge">
+                                        <i className="fas fa-user"></i>
+                                        You Own This
                                     </div>
-                                    <div className="card-content">
-                                        <h3>{fetchedNFT.name || `LaunchPad NFT #${fetchedNFT.tokenId}`}</h3>
-                                        <p className="nft-type">{fetchedNFT.description || 'Moon NFT'}</p>
-                                        <div className="token-info">
-                                            <div className="token-id">
-                                                <span className="label">Token ID</span>
-                                                <span className="value">#{fetchedNFT.tokenId}</span>
-                                            </div>
-                                            <div className="owner-info">
-                                                <span className="label">Owner</span>
-                                                <span className="value">
-                                                    <i className="fas fa-user-astronaut"></i>
-                                                    {fetchedNFT.owner.slice(0, 6)}...{fetchedNFT.owner.slice(-4)}
-                                                </span>
-                                            </div>
+                                )}
+                                <div className="card-image">
+                                    <img
+                                        src={fetchedNFT.image || '/assets/space-placeholder.svg'}
+                                        alt={fetchedNFT.name || `LaunchPad NFT #${fetchedNFT.tokenId}`}
+                                    />
+                                </div>
+                                <div className="card-content">
+                                    <h3>{fetchedNFT.name || `LaunchPad NFT #${fetchedNFT.tokenId}`}</h3>
+                                    <p className="nft-type">{fetchedNFT.description || 'Moon NFT'}</p>
+                                    <div className="token-info">
+                                        <div className="token-id">
+                                            <span className="label">Token ID</span>
+                                            <span className="value">#{fetchedNFT.tokenId}</span>
+                                        </div>
+                                        <div className="owner-info">
+                                            <span className="label">Owner</span>
+                                            <span className="value">
+                                                <i className="fas fa-user-circle"></i>
+                                                {fetchedNFT.owner.toLowerCase() === account.toLowerCase()
+                                                    ? 'You'
+                                                    : `${fetchedNFT.owner.substring(0, 6)}...${fetchedNFT.owner.substring(38)}`}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -797,15 +791,7 @@ function App() {
                             }}
                             aria-label="Close modal"
                         />
-                        <button
-                            className="modal-back"
-                            onClick={() => {
-                                setShowListModal(false);
-                                setListingDetails({ tokenId: '', price: '' });
-                            }}
-                        >
-                            <i className="fas fa-arrow-left"></i>
-                        </button>
+
                         <h2>List NFT for Sale</h2>
                         <div className="modal-form">
                             <div className="form-group">

@@ -562,18 +562,44 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
     }
     
+    /* Only show back button in fetch modal */
     .modal-back {
-        position: absolute;
-        left: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: #fff;
-        font-size: 1.5rem;
-        padding: 0.5rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
+        display: none;
     }
+    
+    /* Specific styling for the back button in fetch modal */
+    .modal-back:hover {
+        color: var(--text-light);
+        background: var(--accent-color);
+    }
+}
+
+/* Common styles for back button - only in fetch modal */
+.modal-back {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-gray);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    z-index: 10;
+    transform: translateY(-50%);
+}
+
+.modal-back:hover {
+    color: var(--text-light);
+    background: var(--accent-color);
+}
+
+/*show backbtn fetchmodal*/
+.fetch-nft-modal .modal-back {
+    display: flex;
 }
