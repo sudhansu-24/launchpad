@@ -8,6 +8,7 @@ import "./navbar.css";
 import "./loading.css";
 import "./notification.css";
 import "./responsive.css";
+import "./chatbot.css";
 import logo from './assets/logo.png';
 
 function App() {
@@ -41,13 +42,49 @@ function App() {
         price: ''
     });
     const [tokenURI, setTokenURI] = useState("");
+    
+    // Add ChatBot state variables and functions
+    const [showChatBot, setShowChatBot] = useState(false);
+    const [chatMessages, setChatMessages] = useState([
+        { sender: 'bot', text: 'Hello! How can I help you with LaunchPad NFT marketplace today?' }
+    ]);
+    const [userInput, setUserInput] = useState('');
+
+    const handleChatSubmit = (e) => {
+        e.preventDefault();
+        if (!userInput.trim()) return;
+        
+        // Add user message
+        setChatMessages(prev => [...prev, { sender: 'user', text: userInput }]);
+        
+        // Process the message and generate a response
+        setTimeout(() => {
+            let botResponse = "I'm still learning about NFTs. For specific help, please connect your wallet and explore our marketplace!";
+            
+            // Simple response logic based on keywords
+            const input = userInput.toLowerCase();
+            if (input.includes('mint') || input.includes('create')) {
+                botResponse = "To create an NFT, connect your wallet and click the 'Create' button in the navigation bar.";
+            } else if (input.includes('buy') || input.includes('purchase')) {
+                botResponse = "You can buy NFTs by browsing our marketplace, clicking on an NFT you like, and pressing the 'Buy Now' button.";
+            } else if (input.includes('sell') || input.includes('list')) {
+                botResponse = "To sell your NFT, connect your wallet, click 'List NFT', enter the token ID and your desired price.";
+            } else if (input.includes('wallet') || input.includes('connect')) {
+                botResponse = "Click the 'Connect Wallet' button in the top right corner to connect your MetaMask wallet.";
+            }
+            
+            setChatMessages(prev => [...prev, { sender: 'bot', text: botResponse }]);
+        }, 600);
+        
+        setUserInput('');
+    };
 
     // Keep existing Web3 functions
     const showNotification = (title, message, type = 'info') => {
         setNotification({ title, message, type });
         setTimeout(() => setNotification(null), 5000);
     };
-
+    
     const LoadingScreen = () => {
         return isLoading ? (
             <div className="loading-overlay">
@@ -242,6 +279,48 @@ function App() {
             <LoadingScreen />
             <div className="gradient-bg">
                 <div className="gradient-overlay"></div>
+            </div>
+
+            {/* Add ChatBot component */}
+            <div className={`chatbot-container ${showChatBot ? 'active' : ''}`}>
+                <div className="chatbot-toggle" onClick={() => setShowChatBot(!showChatBot)}>
+                    {showChatBot ? (
+                        <i className="fas fa-times"></i>
+                    ) : (
+                        <i className="fas fa-comment"></i>
+                    )}
+                </div>
+                
+                {showChatBot && (
+                    <div className="chatbot-window">
+                        <div className="chatbot-header">
+                            <h3>LaunchPad Assistant</h3>
+                        </div>
+                        <div className="chatbot-messages">
+                            {chatMessages.map((msg, index) => (
+                                <div key={index} className={`chat-message ${msg.sender}`}>
+                                    {msg.sender === 'bot' && (
+                                        <div className="bot-avatar">
+                                            <i className="fas fa-robot"></i>
+                                        </div>
+                                    )}
+                                    <div className="message-content">{msg.text}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <form className="chatbot-input" onSubmit={handleChatSubmit}>
+                            <input
+                                type="text"
+                                placeholder="Ask about NFTs..."
+                                value={userInput}
+                                onChange={(e) => setUserInput(e.target.value)}
+                            />
+                            <button type="submit">
+                                <i className="fas fa-paper-plane"></i>
+                            </button>
+                        </form>
+                    </div>
+                )}
             </div>
 
             <nav className="navbar">
